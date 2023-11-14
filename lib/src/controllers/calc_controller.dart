@@ -29,23 +29,22 @@ class CalcController extends ChangeNotifier {
       default:
         break;
     }
-
-    // if initial text was 'error', clear it
-    if (display == '#ERROR') {
-      display = '';
-    }
-    // if there's no value, set it to 0
+    
     if (display.isEmpty) {
       display = '0';
+    } else {
+      if (display == '#ERROR') {
+        display = '';
+      }
+      if (display.startsWith('0') && display.length > 1) {
+        display = display.substring(1);
+      }
+      if (display.endsWith('.0')) {
+        display = display.substring(0, display.length - 2);
+      }
     }
-    // if there's a leading zero, remove it
-    if (display.startsWith('0') && display.length > 1) {
-      display = display.substring(1);
-    }
-    // if there's a '.0' at the end, remove it
-    if (display.endsWith('.0')) {
-      display = display.substring(0, display.length - 2);
-    }
+    
+
     notifyListeners();
   }
 }
